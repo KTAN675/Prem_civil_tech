@@ -60,7 +60,7 @@ export default function Gallery() {
   const [searchQuery, setSearchQuery] = useState('');
 
   useEffect(() => {
-    fetch('http://localhost:5000/api/gallery')
+    fetch((import.meta.env.VITE_API_URL || 'https://prem-civil-tech.onrender.com') + '/api/gallery')
       .then(res => {
         if (!res.ok) throw new Error('Failed to fetch gallery items');
         return res.json();
@@ -87,7 +87,7 @@ export default function Gallery() {
     if (url.startsWith('http') || url.startsWith('data:') || url.startsWith('blob:')) {
       return url;
     }
-    return `http://localhost:5000${url}`;
+    return `${import.meta.env.VITE_API_URL || 'https://prem-civil-tech.onrender.com'}${url}`;
   };
 
   // Compile list of unique categories dynamically

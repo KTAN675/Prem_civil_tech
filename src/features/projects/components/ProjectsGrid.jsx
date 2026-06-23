@@ -83,7 +83,7 @@ export default function ProjectsGrid({ activeFilter, searchQuery }) {
   const [activeImageIndex, setActiveImageIndex] = useState(0);
 
   useEffect(() => {
-    fetch('http://localhost:5000/api/projects')
+    fetch((import.meta.env.VITE_API_URL || 'https://prem-civil-tech.onrender.com') + '/api/projects')
       .then(res => {
         if (!res.ok) throw new Error('API status not OK');
         return res.json();
@@ -152,7 +152,7 @@ export default function ProjectsGrid({ activeFilter, searchQuery }) {
     if (url.startsWith('http') || url.startsWith('data:') || url.startsWith('blob:')) {
       return url;
     }
-    return `http://localhost:5000${url}`;
+    return `${import.meta.env.VITE_API_URL || 'https://prem-civil-tech.onrender.com'}${url}`;
   };
 
   const openDetails = (project) => {

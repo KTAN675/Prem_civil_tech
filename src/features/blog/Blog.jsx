@@ -67,7 +67,7 @@ export default function Blog() {
   const [searchQuery, setSearchQuery] = useState('');
 
   useEffect(() => {
-    fetch('http://localhost:5000/api/blog?status=Published')
+    fetch((import.meta.env.VITE_API_URL || 'https://prem-civil-tech.onrender.com') + '/api/blog?status=Published')
       .then(res => {
         if (!res.ok) throw new Error('Failed to fetch blog posts');
         return res.json();
@@ -85,7 +85,7 @@ export default function Blog() {
   const getImageUrl = (url, index) => {
     if (url) {
       if (url.startsWith('http') || url.startsWith('data:')) return url;
-      return `http://localhost:5000${url}`;
+      return `${import.meta.env.VITE_API_URL || 'https://prem-civil-tech.onrender.com'}${url}`;
     }
     // High-quality industrial concrete fallback images matching the content
     const fallbacks = [
@@ -275,7 +275,7 @@ export default function Blog() {
             <div className="flex-1 overflow-y-auto p-6 md:p-8 space-y-6">
               {selectedPost.image_url ? (
                 <img 
-                  src={`http://localhost:5000${selectedPost.image_url}`} 
+                  src={`${import.meta.env.VITE_API_URL || 'https://prem-civil-tech.onrender.com'}${selectedPost.image_url}`} 
                   alt={selectedPost.title} 
                   className="w-full max-h-[380px] object-cover border border-outline-variant shadow-md"
                 />

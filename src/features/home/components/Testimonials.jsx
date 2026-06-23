@@ -32,7 +32,7 @@ export default function Testimonials() {
   const [activeIndex, setActiveIndex] = useState(0);
 
   useEffect(() => {
-    fetch('http://localhost:5000/api/testimonials')
+    fetch((import.meta.env.VITE_API_URL || 'https://prem-civil-tech.onrender.com') + '/api/testimonials')
       .then(res => {
         if (!res.ok) throw new Error('API status not OK');
         return res.json();
@@ -112,7 +112,7 @@ export default function Testimonials() {
               <div className="flex items-center gap-4 pt-4 border-t border-outline-variant">
                 {current.avatar_url ? (
                   <img 
-                    src={`http://localhost:5000${current.avatar_url}`} 
+                    src={`${import.meta.env.VITE_API_URL || 'https://prem-civil-tech.onrender.com'}${current.avatar_url}`} 
                     alt={current.client_name} 
                     className="h-12 w-12 object-cover border border-outline-variant rounded-none shrink-0" 
                     onError={(e) => { e.target.style.display = 'none'; }}

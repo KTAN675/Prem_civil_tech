@@ -44,7 +44,7 @@ export default function ServicesList() {
   const [loading, setLoading] = useState(true);
 
   useEffect(() => {
-    fetch('http://localhost:5000/api/services')
+    fetch((import.meta.env.VITE_API_URL || 'https://prem-civil-tech.onrender.com') + '/api/services')
       .then(res => {
         if (!res.ok) throw new Error('API status not OK');
         return res.json();

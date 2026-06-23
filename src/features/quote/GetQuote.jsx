@@ -136,7 +136,7 @@ export default function GetQuote() {
         files: filesPayload
       };
 
-      const response = await fetch('http://localhost:5000/api/leads', {
+      const response = await fetch((import.meta.env.VITE_API_URL || 'https://prem-civil-tech.onrender.com') + '/api/leads', {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json'

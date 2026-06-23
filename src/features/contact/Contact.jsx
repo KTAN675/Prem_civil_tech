@@ -11,7 +11,7 @@ export default function Contact() {
   });
 
   useEffect(() => {
-    fetch('http://localhost:5000/api/settings')
+    fetch((import.meta.env.VITE_API_URL || 'https://prem-civil-tech.onrender.com') + '/api/settings')
       .then(res => res.json())
       .then(data => {
         setSettings(prev => ({
@@ -59,7 +59,7 @@ export default function Contact() {
         description: formData.message || 'No project description provided.'
       };
 
-      const response = await fetch('http://localhost:5000/api/leads', {
+      const response = await fetch((import.meta.env.VITE_API_URL || 'https://prem-civil-tech.onrender.com') + '/api/leads', {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json'

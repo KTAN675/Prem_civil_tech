@@ -10,7 +10,7 @@ export default function Header({ activePage }) {
   });
 
   useEffect(() => {
-    fetch('http://localhost:5000/api/settings')
+    fetch((import.meta.env.VITE_API_URL || 'https://prem-civil-tech.onrender.com') + '/api/settings')
       .then(res => res.json())
       .then(data => {
         if (data && data.companyName) {
@@ -45,7 +45,7 @@ export default function Header({ activePage }) {
     if (url.startsWith('http') || url.startsWith('data:') || url.startsWith('blob:')) {
       return url;
     }
-    return `http://localhost:5000${url}`;
+    return `${import.meta.env.VITE_API_URL || 'https://prem-civil-tech.onrender.com'}${url}`;
   };
 
   return (
