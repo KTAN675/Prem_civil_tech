@@ -125,8 +125,8 @@ export default function ProjectsPanel({
 
     try {
       const url = editingProject 
-        ? `http://localhost:5000/api/projects/${editingProject.id}`
-        : 'http://localhost:5000/api/projects';
+        ? `${import.meta.env.VITE_API_URL || 'https://prem-civil-tech.onrender.com'}/api/projects/${editingProject.id}`
+        : (import.meta.env.VITE_API_URL || 'https://prem-civil-tech.onrender.com') + '/api/projects';
       
       const method = editingProject ? 'PUT' : 'POST';
 
@@ -152,7 +152,7 @@ export default function ProjectsPanel({
   const handleProjectDelete = async (projId) => {
     if (!confirm('Are you sure you want to delete this project?')) return;
     try {
-      const response = await fetch(`http://localhost:5000/api/projects/${projId}`, {
+      const response = await fetch(`${import.meta.env.VITE_API_URL || 'https://prem-civil-tech.onrender.com'}/api/projects/${projId}`, {
         method: 'DELETE'
       });
       if (!response.ok) throw new Error('Failed to delete project');
@@ -396,7 +396,7 @@ export default function ProjectsPanel({
     if (url.startsWith('http') || url.startsWith('data:') || url.startsWith('blob:')) {
       return url;
     }
-    return `http://localhost:5000${url}`;
+    return `${import.meta.env.VITE_API_URL || 'https://prem-civil-tech.onrender.com'}${url}`;
   };
 
   return (

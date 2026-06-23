@@ -25,7 +25,7 @@ export default function TeamPanel({
     if (url.startsWith('http') || url.startsWith('data:') || url.startsWith('blob:')) {
       return url;
     }
-    return `http://localhost:5000${url}`;
+    return `${import.meta.env.VITE_API_URL || 'https://prem-civil-tech.onrender.com'}${url}`;
   };
 
   const openTeamModal = (member = null) => {
@@ -69,8 +69,8 @@ export default function TeamPanel({
     e.preventDefault();
     try {
       const url = editingMember
-        ? `http://localhost:5000/api/team/${editingMember.id}`
-        : 'http://localhost:5000/api/team';
+        ? `${import.meta.env.VITE_API_URL || 'https://prem-civil-tech.onrender.com'}/api/team/${editingMember.id}`
+        : (import.meta.env.VITE_API_URL || 'https://prem-civil-tech.onrender.com') + '/api/team';
       
       const method = editingMember ? 'PUT' : 'POST';
 
@@ -93,7 +93,7 @@ export default function TeamPanel({
   const handleTeamDelete = async (memberId) => {
     if (!confirm('Are you sure you want to remove this team member?')) return;
     try {
-      const response = await fetch(`http://localhost:5000/api/team/${memberId}`, {
+      const response = await fetch(`${import.meta.env.VITE_API_URL || 'https://prem-civil-tech.onrender.com'}/api/team/${memberId}`, {
         method: 'DELETE'
       });
       if (!response.ok) throw new Error('Failed to remove team member');

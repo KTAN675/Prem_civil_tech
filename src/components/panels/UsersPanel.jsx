@@ -15,7 +15,7 @@ export default function UsersPanel({
   const handleUserSubmit = async (e) => {
     e.preventDefault();
     try {
-      const response = await fetch('http://localhost:5000/api/users', {
+      const response = await fetch((import.meta.env.VITE_API_URL || 'https://prem-civil-tech.onrender.com') + '/api/users', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify(userForm)
@@ -38,7 +38,7 @@ export default function UsersPanel({
   const handleUserDelete = async (userId) => {
     if (!confirm('Are you sure you want to delete this system user account?')) return;
     try {
-      const response = await fetch(`http://localhost:5000/api/users/${userId}`, {
+      const response = await fetch(`${import.meta.env.VITE_API_URL || 'https://prem-civil-tech.onrender.com'}/api/users/${userId}`, {
         method: 'DELETE'
       });
       const data = await response.json();

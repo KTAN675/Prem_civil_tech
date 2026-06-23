@@ -46,27 +46,27 @@ export default function AdminDashboard() {
     setError('');
     try {
       // Fetch Leads
-      const resLeads = await fetch('http://localhost:5000/api/leads');
+      const resLeads = await fetch((import.meta.env.VITE_API_URL || 'https://prem-civil-tech.onrender.com') + '/api/leads');
       if (resLeads.ok) setLeads(await resLeads.json());
 
       // Fetch Projects
-      const resProjects = await fetch('http://localhost:5000/api/projects');
+      const resProjects = await fetch((import.meta.env.VITE_API_URL || 'https://prem-civil-tech.onrender.com') + '/api/projects');
       if (resProjects.ok) setProjects(await resProjects.json());
 
       // Fetch Team
-      const resTeam = await fetch('http://localhost:5000/api/team');
+      const resTeam = await fetch((import.meta.env.VITE_API_URL || 'https://prem-civil-tech.onrender.com') + '/api/team');
       if (resTeam.ok) setTeam(await resTeam.json());
 
       // Fetch Testimonials
-      const resTestimonials = await fetch('http://localhost:5000/api/testimonials?all=true');
+      const resTestimonials = await fetch((import.meta.env.VITE_API_URL || 'https://prem-civil-tech.onrender.com') + '/api/testimonials?all=true');
       if (resTestimonials.ok) setTestimonials(await resTestimonials.json());
 
       // Fetch Gallery
-      const resGallery = await fetch('http://localhost:5000/api/gallery');
+      const resGallery = await fetch((import.meta.env.VITE_API_URL || 'https://prem-civil-tech.onrender.com') + '/api/gallery');
       if (resGallery.ok) setGallery(await resGallery.json());
 
       // Fetch Blog
-      const resBlogs = await fetch('http://localhost:5000/api/blog');
+      const resBlogs = await fetch((import.meta.env.VITE_API_URL || 'https://prem-civil-tech.onrender.com') + '/api/blog');
       if (resBlogs.ok) setBlogs(await resBlogs.json());
 
     } catch (err) {

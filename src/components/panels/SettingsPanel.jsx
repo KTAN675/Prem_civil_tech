@@ -40,12 +40,12 @@ export default function SettingsPanel({ showFlashMessage }) {
     if (url.startsWith('http') || url.startsWith('data:') || url.startsWith('blob:')) {
       return url;
     }
-    return `http://localhost:5000${url}`;
+    return `${import.meta.env.VITE_API_URL || 'https://prem-civil-tech.onrender.com'}${url}`;
   };
 
   const fetchSettings = async () => {
     try {
-      const response = await fetch('http://localhost:5000/api/settings');
+      const response = await fetch((import.meta.env.VITE_API_URL || 'https://prem-civil-tech.onrender.com') + '/api/settings');
       if (response.ok) {
         const data = await response.json();
         setSettings(prev => ({
@@ -88,7 +88,7 @@ export default function SettingsPanel({ showFlashMessage }) {
   const handleSave = async (e) => {
     if (e) e.preventDefault();
     try {
-      const response = await fetch('http://localhost:5000/api/settings', {
+      const response = await fetch((import.meta.env.VITE_API_URL || 'https://prem-civil-tech.onrender.com') + '/api/settings', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify(settings)
@@ -113,7 +113,7 @@ export default function SettingsPanel({ showFlashMessage }) {
     }
 
     try {
-      const response = await fetch('http://localhost:5000/api/settings/change-password', {
+      const response = await fetch((import.meta.env.VITE_API_URL || 'https://prem-civil-tech.onrender.com') + '/api/settings/change-password', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({

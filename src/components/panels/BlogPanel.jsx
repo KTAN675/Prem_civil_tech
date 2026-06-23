@@ -312,7 +312,7 @@ export default function BlogPanel({
   const handleDeletePost = async (postId) => {
     if (!confirm('Are you sure you want to delete this blog post?')) return;
     try {
-      const response = await fetch(`http://localhost:5000/api/blog/${postId}`, {
+      const response = await fetch(`${import.meta.env.VITE_API_URL || 'https://prem-civil-tech.onrender.com'}/api/blog/${postId}`, {
         method: 'DELETE'
       });
       if (!response.ok) throw new Error('Failed to delete blog post');
@@ -337,7 +337,7 @@ export default function BlogPanel({
 
     try {
       if (view === 'add') {
-        const res = await fetch('http://localhost:5000/api/blog', {
+        const res = await fetch((import.meta.env.VITE_API_URL || 'https://prem-civil-tech.onrender.com') + '/api/blog', {
           method: 'POST',
           headers: { 'Content-Type': 'application/json' },
           body: JSON.stringify(payload)
@@ -363,7 +363,7 @@ export default function BlogPanel({
         showFlashMessage('Blog post created successfully.');
       } else {
         // Edit mode
-        const res = await fetch(`http://localhost:5000/api/blog/${currentPost.id}`, {
+        const res = await fetch(`${import.meta.env.VITE_API_URL || 'https://prem-civil-tech.onrender.com'}/api/blog/${currentPost.id}`, {
           method: 'PUT',
           headers: { 'Content-Type': 'application/json' },
           body: JSON.stringify(payload)
@@ -410,7 +410,7 @@ export default function BlogPanel({
         <div className="bg-surface-container border border-outline-variant p-8 shadow-[4px_4px_0_0_rgba(0,0,0,0.4)] max-w-4xl space-y-6">
           {currentPost.image_url && (
             <img 
-              src={`http://localhost:5000${currentPost.image_url}`} 
+              src={`${import.meta.env.VITE_API_URL || 'https://prem-civil-tech.onrender.com'}${currentPost.image_url}`} 
               alt={currentPost.title} 
               className="w-full max-h-[350px] object-cover border border-outline-variant"
             />
@@ -740,7 +740,7 @@ export default function BlogPanel({
                   {formData.image_url ? (
                     <div className="absolute inset-0 bg-background flex flex-col items-center justify-center p-2">
                       <img 
-                        src={formData.image_url.startsWith('data:') ? formData.image_url : `http://localhost:5000${formData.image_url}`} 
+                        src={formData.image_url.startsWith('data:') ? formData.image_url : `${import.meta.env.VITE_API_URL || 'https://prem-civil-tech.onrender.com'}${formData.image_url}`} 
                         alt="Featured Preview" 
                         className="h-[100px] object-cover border border-outline-variant mb-2"
                       />
@@ -867,7 +867,7 @@ export default function BlogPanel({
                   <div className="w-16 h-12 bg-surface-variant border border-outline-variant overflow-hidden flex items-center justify-center">
                     {post.image_url ? (
                       <img 
-                        src={`http://localhost:5000${post.image_url}`} 
+                        src={`${import.meta.env.VITE_API_URL || 'https://prem-civil-tech.onrender.com'}${post.image_url}`} 
                         alt="Thumbnail" 
                         className="w-full h-full object-cover"
                         onError={(e) => { e.target.style.display = 'none'; }}

@@ -33,7 +33,7 @@ export default function GalleryPanel({
     if (url.startsWith('http') || url.startsWith('data:') || url.startsWith('blob:')) {
       return url;
     }
-    return `http://localhost:5000${url}`;
+    return `${import.meta.env.VITE_API_URL || 'https://prem-civil-tech.onrender.com'}${url}`;
   };
 
   // Compile list of all categories dynamically (default list + database items)
@@ -81,7 +81,7 @@ export default function GalleryPanel({
               const title = file.name.substring(0, file.name.lastIndexOf('.')) || file.name;
               const category = activeTab === 'All' ? 'Site Work' : activeTab;
               
-              const res = await fetch('http://localhost:5000/api/gallery', {
+              const res = await fetch((import.meta.env.VITE_API_URL || 'https://prem-civil-tech.onrender.com') + '/api/gallery', {
                 method: 'POST',
                 headers: { 'Content-Type': 'application/json' },
                 body: JSON.stringify({
@@ -115,7 +115,7 @@ export default function GalleryPanel({
   const handleGalleryDelete = async (itemId) => {
     if (!confirm('Are you sure you want to delete this item?')) return;
     try {
-      const response = await fetch(`http://localhost:5000/api/gallery/${itemId}`, {
+      const response = await fetch(`${import.meta.env.VITE_API_URL || 'https://prem-civil-tech.onrender.com'}/api/gallery/${itemId}`, {
         method: 'DELETE'
       });
       if (!response.ok) throw new Error('Failed to delete gallery item');
@@ -136,7 +136,7 @@ export default function GalleryPanel({
     try {
       let successCount = 0;
       for (const id of selectedIds) {
-        const response = await fetch(`http://localhost:5000/api/gallery/${id}`, {
+        const response = await fetch(`${import.meta.env.VITE_API_URL || 'https://prem-civil-tech.onrender.com'}/api/gallery/${id}`, {
           method: 'DELETE'
         });
         if (response.ok) {
@@ -181,7 +181,7 @@ export default function GalleryPanel({
     e.preventDefault();
     if (!editingItem) return;
     try {
-      const response = await fetch(`http://localhost:5000/api/gallery/${editingItem.id}`, {
+      const response = await fetch(`${import.meta.env.VITE_API_URL || 'https://prem-civil-tech.onrender.com'}/api/gallery/${editingItem.id}`, {
         method: 'PUT',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify(editForm)

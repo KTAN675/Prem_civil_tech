@@ -27,7 +27,7 @@ export default function LeadsPanel({
   // --- Lead Management Actions ---
   const handleLeadStatusChange = async (leadId, newStatus) => {
     try {
-      const response = await fetch(`http://localhost:5000/api/leads/${leadId}`, {
+      const response = await fetch(`${import.meta.env.VITE_API_URL || 'https://prem-civil-tech.onrender.com'}/api/leads/${leadId}`, {
         method: 'PUT',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({ status: newStatus })
@@ -58,7 +58,7 @@ export default function LeadsPanel({
   const handleLeadDelete = async (leadId) => {
     if (!confirm('Are you sure you want to delete this lead?')) return;
     try {
-      const response = await fetch(`http://localhost:5000/api/leads/${leadId}`, {
+      const response = await fetch(`${import.meta.env.VITE_API_URL || 'https://prem-civil-tech.onrender.com'}/api/leads/${leadId}`, {
         method: 'DELETE'
       });
       if (!response.ok) throw new Error('Failed to delete lead');
@@ -75,7 +75,7 @@ export default function LeadsPanel({
   const handleLeadSubmit = async (e) => {
     e.preventDefault();
     try {
-      const response = await fetch('http://localhost:5000/api/leads', {
+      const response = await fetch((import.meta.env.VITE_API_URL || 'https://prem-civil-tech.onrender.com') + '/api/leads', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify(leadForm)
@@ -363,7 +363,7 @@ export default function LeadsPanel({
                         return urlStr;
                       }
                       const cleanUrl = urlStr.startsWith('/') ? urlStr : `/${urlStr}`;
-                      return `http://localhost:5000${cleanUrl}`;
+                      return `${import.meta.env.VITE_API_URL || 'https://prem-civil-tech.onrender.com'}${cleanUrl}`;
                     };
 
                     return (

@@ -102,7 +102,7 @@ export default function TestimonialsPanel({
   const handleApproveToggle = async (testId, currentStatus) => {
     try {
       const newStatus = !currentStatus;
-      const response = await fetch(`http://localhost:5000/api/testimonials/${testId}`, {
+      const response = await fetch(`${import.meta.env.VITE_API_URL || 'https://prem-civil-tech.onrender.com'}/api/testimonials/${testId}`, {
         method: 'PUT',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({ is_approved: newStatus })
@@ -119,7 +119,7 @@ export default function TestimonialsPanel({
   const handleDeleteTestimonial = async (testId) => {
     if (!confirm('Are you sure you want to delete this testimonial?')) return;
     try {
-      const response = await fetch(`http://localhost:5000/api/testimonials/${testId}`, {
+      const response = await fetch(`${import.meta.env.VITE_API_URL || 'https://prem-civil-tech.onrender.com'}/api/testimonials/${testId}`, {
         method: 'DELETE'
       });
       if (!response.ok) throw new Error('Failed to delete testimonial');
@@ -137,7 +137,7 @@ export default function TestimonialsPanel({
     try {
       let succeeded = 0;
       for (const id of selectedIds) {
-        const response = await fetch(`http://localhost:5000/api/testimonials/${id}`, { method: 'DELETE' });
+        const response = await fetch(`${import.meta.env.VITE_API_URL || 'https://prem-civil-tech.onrender.com'}/api/testimonials/${id}`, { method: 'DELETE' });
         if (response.ok) succeeded++;
       }
       setTestimonials(prev => prev.filter(t => !selectedIds.includes(t.id)));
@@ -152,7 +152,7 @@ export default function TestimonialsPanel({
     try {
       let succeeded = 0;
       for (const id of selectedIds) {
-        const response = await fetch(`http://localhost:5000/api/testimonials/${id}`, {
+        const response = await fetch(`${import.meta.env.VITE_API_URL || 'https://prem-civil-tech.onrender.com'}/api/testimonials/${id}`, {
           method: 'PUT',
           headers: { 'Content-Type': 'application/json' },
           body: JSON.stringify({ is_approved: true })
@@ -237,7 +237,7 @@ export default function TestimonialsPanel({
 
     try {
       if (view === 'add') {
-        const res = await fetch('http://localhost:5000/api/testimonials', {
+        const res = await fetch((import.meta.env.VITE_API_URL || 'https://prem-civil-tech.onrender.com') + '/api/testimonials', {
           method: 'POST',
           headers: { 'Content-Type': 'application/json' },
           body: JSON.stringify(formData)
@@ -262,7 +262,7 @@ export default function TestimonialsPanel({
         showFlashMessage('Testimonial added successfully.');
       } else {
         // Edit mode
-        const res = await fetch(`http://localhost:5000/api/testimonials/${currentTestimonial.id}`, {
+        const res = await fetch(`${import.meta.env.VITE_API_URL || 'https://prem-civil-tech.onrender.com'}/api/testimonials/${currentTestimonial.id}`, {
           method: 'PUT',
           headers: { 'Content-Type': 'application/json' },
           body: JSON.stringify(formData)
@@ -387,7 +387,7 @@ export default function TestimonialsPanel({
                   {formData.avatar_url ? (
                     <div className="absolute inset-0 bg-surface-container flex flex-col items-center justify-center p-2">
                       <img 
-                        src={formData.avatar_url.startsWith('data:') ? formData.avatar_url : `http://localhost:5000${formData.avatar_url}`} 
+                        src={formData.avatar_url.startsWith('data:') ? formData.avatar_url : `${import.meta.env.VITE_API_URL || 'https://prem-civil-tech.onrender.com'}${formData.avatar_url}`} 
                         alt="Client Preview" 
                         className="h-[100px] w-[100px] object-cover border border-outline-variant mb-2"
                       />
@@ -589,7 +589,7 @@ export default function TestimonialsPanel({
                     <div className="flex items-center gap-3">
                       {test.avatar_url ? (
                         <img 
-                          src={`http://localhost:5000${test.avatar_url}`} 
+                          src={`${import.meta.env.VITE_API_URL || 'https://prem-civil-tech.onrender.com'}${test.avatar_url}`} 
                           alt={test.client_name} 
                           className="h-8 w-8 object-cover border border-outline-variant shrink-0" 
                           onError={(e) => { e.target.style.display = 'none'; }}
