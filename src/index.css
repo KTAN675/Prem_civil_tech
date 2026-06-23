@@ -1,0 +1,157 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+/* Base custom styles for Admin Dashboard */
+html, body {
+  background-color: #121414;
+  color: #e2e2e2;
+  margin: 0;
+  padding: 0;
+}
+
+/* Custom scrollbars for clean dashboard layout */
+::-webkit-scrollbar {
+  width: 6px;
+  height: 6px;
+}
+::-webkit-scrollbar-track {
+  background: #1a1c1c;
+}
+::-webkit-scrollbar-thumb {
+  background: #333535;
+}
+::-webkit-scrollbar-thumb:hover {
+  background: #ff8c00;
+}
+
+.industrial-bg {
+  background-image: radial-gradient(circle at 2px 2px, rgba(255,255,255,0.05) 1px, transparent 0);
+  background-size: 32px 32px;
+}
+
+.hazard-stripe {
+  background: repeating-linear-gradient(
+    45deg,
+    rgba(255, 140, 0, 0.1),
+    rgba(255, 140, 0, 0.1) 10px,
+    transparent 10px,
+    transparent 20px
+  );
+}
+
+/* ==========================================================================
+   Print Stylesheet - Professional, High-Contrast Black & White Reports
+   ========================================================================== */
+@media print {
+  /* Clean high-contrast colors and white background */
+  html, body, #root, main, .bg-background {
+    background: #ffffff !important;
+    color: #000000 !important;
+    margin: 0 !important;
+    padding: 0 !important;
+    font-size: 11pt !important;
+    font-family: 'Inter', system-ui, sans-serif !important;
+  }
+
+  /* Hide layout components and UI controls */
+  aside,
+  header,
+  .no-print,
+  button,
+  select,
+  textarea,
+  .print\:hidden {
+    display: none !important;
+  }
+
+  /* Expand main area to take full printable page width */
+  main {
+    margin-left: 0 !important;
+    padding: 0 !important;
+    width: 100% !important;
+    display: block !important;
+    overflow: visible !important;
+    background: #ffffff !important;
+  }
+
+  /* Reset scrolled divs to fully expand on print */
+  .overflow-hidden,
+  .overflow-y-auto {
+    overflow: visible !important;
+    height: auto !important;
+  }
+
+  /* Style sections into clean bordered paper-like panels */
+  section,
+  .bg-surface-container,
+  .bg-surface-container-high,
+  .bg-surface-container-lowest {
+    background: #ffffff !important;
+    border: 1px solid #cccccc !important;
+    border-radius: 6px !important;
+    color: #000000 !important;
+    padding: 1.5rem !important;
+    margin-bottom: 1.5rem !important;
+    box-shadow: none !important;
+    page-break-inside: avoid !important;
+  }
+
+  /* Print Text adjustments */
+  .text-on-surface,
+  .text-on-surface-variant,
+  .text-primary-container,
+  p, h1, h2, h3, h4, span, div, td, th, a {
+    color: #000000 !important;
+  }
+
+  /* Convert grid columns to vertical document flow */
+  .grid,
+  .lg\:grid-cols-3 {
+    display: block !important;
+    width: 100% !important;
+  }
+
+  .lg\:col-span-2 {
+    width: 100% !important;
+  }
+
+  /* Clean up lines & colors of the timeline */
+  .border-l-2 {
+    border-left: 2px solid #dddddd !important;
+  }
+
+  .border-\[\#333333\] {
+    border-color: #dddddd !important;
+  }
+
+  .bg-\[\#55C38D\] {
+    background-color: #3b82f6 !important; /* solid color for note nodes */
+  }
+
+  .bg-primary-container {
+    background-color: #10b981 !important; /* solid color for log nodes */
+  }
+
+  .bg-surface-container-lowest {
+    background-color: #ffffff !important;
+    border-color: #dddddd !important;
+  }
+
+  /* Reset flex layout and lock heights for clean printing flow */
+  body, html, #root, .h-screen, .overflow-hidden, .flex, .flex-row, .flex-col, main {
+    height: auto !important;
+    min-height: auto !important;
+    overflow: visible !important;
+    position: static !important;
+    display: block !important;
+  }
+
+  /* Force details column and timeline to flow vertically */
+  .grid, .lg\:grid-cols-3, .lg\:col-span-2, .space-y-gutter {
+    display: block !important;
+    width: 100% !important;
+    height: auto !important;
+    overflow: visible !important;
+  }
+}
