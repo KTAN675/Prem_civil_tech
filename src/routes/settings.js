@@ -58,7 +58,7 @@ const ensureSettingsTable = async () => {
     await db.query(`
       CREATE TABLE IF NOT EXISTS settings (
         setting_key VARCHAR(100) PRIMARY KEY,
-        setting_value TEXT
+        setting_value LONGTEXT
       ) ENGINE=InnoDB;
     `);
 
