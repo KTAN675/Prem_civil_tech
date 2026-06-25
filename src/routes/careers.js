@@ -4,54 +4,10 @@ const db = require('../config/db');
 const fs = require('fs');
 const path = require('path');
 
-// Helper to save base64 files to public/uploads
+// Return the base64 data URL directly so it stores persistently in the DB.
+// This prevents candidate resume loss when Render container instances restart or scale.
 const saveBase64File = (base64Data, originalName) => {
-  if (typeof base64Data !== 'string') {
-    return base64Data;
-  }
-  
-  if (base64Data.startsWith('http') || base64Data.startsWith('/uploads')) {
-    return base64Data;
-  }
-
-  let base64Content = base64Data;
-  let ext = '.pdf'; // Default to pdf
-
-  if (base64Data.startsWith('data:')) {
-    const semicolonIdx = base64Data.indexOf(';base64,');
-    if (semicolonIdx !== -1) {
-      base64Content = base64Data.substring(semicolonIdx + 8);
-      // Try to detect extension
-      const mime = base64Data.substring(5, semicolonIdx);
-      if (mime.includes('pdf')) ext = '.pdf';
-      else if (mime.includes('word') || mime.includes('officedocument')) ext = '.docx';
-      else if (mime.includes('image/png')) ext = '.png';
-      else if (mime.includes('image/jpeg')) ext = '.jpg';
-    }
-  }
-
-  if (originalName) {
-    const origExt = path.extname(originalName);
-    if (origExt) ext = origExt;
-  }
-
-  try {
-    const buffer = Buffer.from(base64Content, 'base64');
-    const uniqueName = `${Date.now()}-${Math.random().toString(36).substr(2, 9)}${ext}`;
-    const uploadDir = path.join(__dirname, '../../public/uploads');
-
-    if (!fs.existsSync(uploadDir)) {
-      fs.mkdirSync(uploadDir, { recursive: true });
-    }
-
-    const filePath = path.join(uploadDir, uniqueName);
-    fs.writeFileSync(filePath, buffer);
-
-    return `/uploads/${uniqueName}`;
-  } catch (err) {
-    console.error('Error in saveBase64File for careers:', err);
-    return base64Data; // Fallback to storing raw base64 in LONGTEXT
-  }
+  return base64Data;
 };
 
 // POST /api/careers/apply - Public job application submission
