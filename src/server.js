@@ -13,6 +13,7 @@ const galleryRouter = require('./routes/gallery');
 const usersRouter = require('./routes/users');
 const blogRouter = require('./routes/blog');
 const settingsRouter = require('./routes/settings');
+const careersRouter = require('./routes/careers');
 
 const app = express();
 const PORT = process.env.PORT || 5000;
@@ -34,6 +35,7 @@ app.use('/api/gallery', galleryRouter);
 app.use('/api/users', usersRouter);
 app.use('/api/blog', blogRouter);
 app.use('/api/settings', settingsRouter);
+app.use('/api/careers', careersRouter);
 
 // Health check endpoint
 app.get('/api/health', (req, res) => {

@@ -112,6 +112,23 @@ async function main() {
       ) ENGINE=InnoDB;
     `);
 
+    // Create job_applications table
+    console.log('Creating "job_applications" table...');
+    await connection.query(`
+      CREATE TABLE IF NOT EXISTS job_applications (
+        id INT AUTO_INCREMENT PRIMARY KEY,
+        full_name VARCHAR(100) NOT NULL,
+        email VARCHAR(100) NOT NULL,
+        phone VARCHAR(20) NOT NULL,
+        position VARCHAR(100) NOT NULL,
+        experience VARCHAR(50) NOT NULL,
+        message TEXT,
+        resume_url LONGTEXT,
+        status VARCHAR(50) DEFAULT 'Pending',
+        created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
+      ) ENGINE=InnoDB;
+    `);
+
     // Create gallery_items table
     console.log('Creating "gallery_items" table...');
     await connection.query(`
