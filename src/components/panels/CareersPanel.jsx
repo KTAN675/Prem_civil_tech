@@ -218,13 +218,17 @@ export default function CareersPanel({
 
   // Resume file link/download handler
   const handleResumeView = (resumeUrl, name) => {
+    console.log("handleResumeView called with:", { resumeUrl, name });
+    
     if (!resumeUrl) {
+      console.warn("No resumeUrl provided.");
       alert('No resume uploaded.');
       return;
     }
 
     if (resumeUrl.startsWith('data:')) {
       try {
+        console.log("Processing base64 Data URL resume...");
         const parts = resumeUrl.split(';base64,');
         if (parts.length !== 2) {
           throw new Error('Invalid data format');
@@ -254,6 +258,8 @@ export default function CareersPanel({
           extension = '.jpg';
         }
 
+        console.log(`Downloading base64 resume as blob with extension: ${extension}`);
+
         // Create download link and trigger click
         const link = document.createElement('a');
         link.href = blobUrl;
@@ -269,11 +275,27 @@ export default function CareersPanel({
         alert('Failed to download base64 resume. File might be corrupted.');
       }
     } else {
+      console.log("Opening relative/server URL path for resume...");
       // Relative file path on backend server
       const fullUrl = resumeUrl.startsWith('http') 
         ? resumeUrl 
         : `${import.meta.env.VITE_API_URL || 'https://prem-civil-tech.onrender.com'}${resumeUrl}`;
-      window.open(fullUrl, '_blank');
+      
+      console.log("Final full URL:", fullUrl);
+      
+      // Use dynamic link element click which is much less likely to be blocked by popup blockers than window.open
+      try {
+        const link = document.createElement('a');
+        link.href = fullUrl;
+        link.target = '_blank';
+        link.rel = 'noopener noreferrer';
+        document.body.appendChild(link);
+        link.click();
+        document.body.removeChild(link);
+      } catch (err) {
+        console.error("Link navigation failed, falling back to window.open", err);
+        window.open(fullUrl, '_blank');
+      }
     }
   };
 
