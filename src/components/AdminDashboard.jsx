@@ -10,6 +10,7 @@ import TestimonialsPanel from './panels/TestimonialsPanel';
 import BlogPanel from './panels/BlogPanel';
 import TeamPanel from './panels/TeamPanel';
 import SettingsPanel from './panels/SettingsPanel';
+import CareersPanel from './panels/CareersPanel';
 
 export default function AdminDashboard() {
   const [activeTab, setActiveTab] = useState('dashboard'); // 'dashboard' | 'leads' | 'projects' | 'gallery' | 'testimonials' | 'blog' | 'team' | 'settings'
@@ -22,6 +23,7 @@ export default function AdminDashboard() {
   const [testimonials, setTestimonials] = useState([]);
   const [gallery, setGallery] = useState([]);
   const [blogs, setBlogs] = useState([]);
+  const [applications, setApplications] = useState([]);
   const [loading, setLoading] = useState(false);
   const [message, setMessage] = useState('');
   const [error, setError] = useState('');
@@ -69,6 +71,10 @@ export default function AdminDashboard() {
       const resBlogs = await fetch((import.meta.env.VITE_API_URL || 'https://prem-civil-tech.onrender.com') + '/api/blog');
       if (resBlogs.ok) setBlogs(await resBlogs.json());
 
+      // Fetch Applications
+      const resApps = await fetch((import.meta.env.VITE_API_URL || 'https://prem-civil-tech.onrender.com') + '/api/careers/applications');
+      if (resApps.ok) setApplications(await resApps.json());
+
     } catch (err) {
       console.error('Error fetching dashboard data:', err);
       setError('Failed to connect to backend server. Make sure backend is running.');
@@ -97,7 +103,9 @@ export default function AdminDashboard() {
     totalProjects: projects.length,
     totalTeam: team.length,
     pendingTestimonials: testimonials.filter(t => !t.is_approved).length,
-    totalGallery: gallery.length
+    totalGallery: gallery.length,
+    totalApplications: applications.length,
+    newApplications: applications.filter(a => a.status === 'Pending').length
   };
 
   return (
@@ -205,6 +213,21 @@ export default function AdminDashboard() {
           >
             <span className="material-symbols-outlined">group</span>
             <span>Team</span>
+          </button>
+
+          <button 
+            onClick={() => setActiveTab('careers')} 
+            className={`w-full flex items-center space-x-3 px-3 py-2 transition-colors text-[14px] ${
+              activeTab === 'careers' 
+                ? 'bg-surface-container-high border-l-2 border-primary-container text-on-surface font-title-md' 
+                : 'text-on-surface-variant hover:bg-surface-container hover:text-on-surface'
+            }`}
+          >
+            <span className="material-symbols-outlined">work</span>
+            <span>Careers</span>
+            {stats.newApplications > 0 && (
+              <span className="ml-auto bg-primary-container text-black text-[10px] font-bold px-1.5 py-0.5 rounded-full">{stats.newApplications}</span>
+            )}
           </button>
 
           <button 
@@ -336,6 +359,17 @@ export default function AdminDashboard() {
             <TeamPanel 
               team={team}
               setTeam={setTeam}
+              fetchDashboardData={fetchDashboardData}
+              showFlashMessage={showFlashMessage}
+              searchQuery={searchQuery}
+            />
+          )}
+
+          {activeTab === 'careers' && (
+            <CareersPanel 
+              applications={applications}
+              setApplications={setApplications}
+              loading={loading}
               fetchDashboardData={fetchDashboardData}
               showFlashMessage={showFlashMessage}
               searchQuery={searchQuery}
