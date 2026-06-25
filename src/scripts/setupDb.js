@@ -129,6 +129,21 @@ async function main() {
       ) ENGINE=InnoDB;
     `);
 
+    // Create job_openings table
+    console.log('Creating "job_openings" table...');
+    await connection.query(`
+      CREATE TABLE IF NOT EXISTS job_openings (
+        id INT AUTO_INCREMENT PRIMARY KEY,
+        title VARCHAR(100) NOT NULL,
+        department VARCHAR(100) NOT NULL,
+        location VARCHAR(100) NOT NULL,
+        experience VARCHAR(50) NOT NULL,
+        description TEXT NOT NULL,
+        is_active TINYINT(1) DEFAULT 1,
+        created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
+      ) ENGINE=InnoDB;
+    `);
+
     // Create gallery_items table
     console.log('Creating "gallery_items" table...');
     await connection.query(`
