@@ -65,7 +65,7 @@ export default function Header({ activePage }) {
             </span>
           )}
           {/* Responsive Brand Logo Text */}
-          <span className="hidden sm:inline-block text-base lg:text-lg xl:text-xl font-bold tracking-tight">
+          <span className="inline-block text-xs min-[360px]:text-sm sm:text-base lg:text-lg xl:text-xl font-bold tracking-tight truncate max-w-[120px] min-[360px]:max-w-[180px] sm:max-w-none">
             {settings.companyName}
           </span>
         </Link>
