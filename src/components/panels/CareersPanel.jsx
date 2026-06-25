@@ -216,23 +216,60 @@ export default function CareersPanel({
     });
   };
 
-  // Resume file link handler
+  // Resume file link/download handler
   const handleResumeView = (resumeUrl, name) => {
     if (!resumeUrl) {
       alert('No resume uploaded.');
       return;
     }
+
     if (resumeUrl.startsWith('data:')) {
       try {
-        const newTab = window.open();
-        newTab.document.write(`<iframe src="${resumeUrl}" frameborder="0" style="border:0; top:0px; left:0px; bottom:0px; right:0px; width:100%; height:100%;" allowfullscreen></iframe>`);
-      } catch (err) {
+        const parts = resumeUrl.split(';base64,');
+        if (parts.length !== 2) {
+          throw new Error('Invalid data format');
+        }
+
+        const contentType = parts[0].split(':')[1];
+        const rawBase64 = parts[1];
+
+        // Decode base64 to binary bytes
+        const binaryString = window.atob(rawBase64);
+        const bytes = new Uint8Array(binaryString.length);
+        for (let i = 0; i < binaryString.length; i++) {
+          bytes[i] = binaryString.charCodeAt(i);
+        }
+
+        // Create Blob
+        const blob = new Blob([bytes], { type: contentType });
+        const blobUrl = URL.createObjectURL(blob);
+
+        // Determine extension
+        let extension = '.pdf';
+        if (contentType.includes('word') || contentType.includes('officedocument') || contentType.includes('msword')) {
+          extension = '.docx';
+        } else if (contentType.includes('png')) {
+          extension = '.png';
+        } else if (contentType.includes('jpeg') || contentType.includes('jpg')) {
+          extension = '.jpg';
+        }
+
+        // Create download link and trigger click
         const link = document.createElement('a');
-        link.href = resumeUrl;
-        link.download = `${name.replace(/\s+/g, '_')}_Resume`;
+        link.href = blobUrl;
+        link.download = `${name.replace(/\s+/g, '_')}_Resume${extension}`;
+        document.body.appendChild(link);
         link.click();
+
+        // Clean up
+        document.body.removeChild(link);
+        URL.revokeObjectURL(blobUrl);
+      } catch (err) {
+        console.error('Error decoding/downloading base64 resume:', err);
+        alert('Failed to download base64 resume. File might be corrupted.');
       }
     } else {
+      // Relative file path on backend server
       const fullUrl = resumeUrl.startsWith('http') 
         ? resumeUrl 
         : `${import.meta.env.VITE_API_URL || 'https://prem-civil-tech.onrender.com'}${resumeUrl}`;
