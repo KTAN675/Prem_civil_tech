@@ -446,12 +446,24 @@ export default function CareersPanel({
                       </td>
                       <td className="p-4">
                         {app.resume_url ? (
-                          <button 
-                            onClick={() => handleResumeView(app.resume_url, app.full_name)}
-                            className="bg-transparent border border-[#333333] hover:border-primary-container text-on-surface-variant hover:text-primary-container px-3 py-1.5 text-xs font-semibold flex items-center gap-1.5 transition-all shadow-[1px_1px_0px_rgba(0,0,0,0.2)]"
-                          >
-                            <span className="material-symbols-outlined text-sm">download_file</span> View CV
-                          </button>
+                          app.resume_url.startsWith('data:') ? (
+                            <a 
+                              href={app.resume_url}
+                              download={`${app.full_name.replace(/\s+/g, '_')}_Resume.pdf`}
+                              className="bg-transparent border border-[#333333] hover:border-primary-container text-on-surface-variant hover:text-primary-container px-3 py-1.5 text-xs font-semibold inline-flex items-center gap-1.5 transition-all shadow-[1px_1px_0px_rgba(0,0,0,0.2)]"
+                            >
+                              <span className="material-symbols-outlined text-sm">download_file</span> View CV
+                            </a>
+                          ) : (
+                            <a 
+                              href={app.resume_url.startsWith('http') ? app.resume_url : `${import.meta.env.VITE_API_URL || 'https://prem-civil-tech.onrender.com'}${app.resume_url}`}
+                              target="_blank"
+                              rel="noopener noreferrer"
+                              className="bg-transparent border border-[#333333] hover:border-primary-container text-on-surface-variant hover:text-primary-container px-3 py-1.5 text-xs font-semibold inline-flex items-center gap-1.5 transition-all shadow-[1px_1px_0px_rgba(0,0,0,0.2)]"
+                            >
+                              <span className="material-symbols-outlined text-sm">download_file</span> View CV
+                            </a>
+                          )
                         ) : (
                           <span className="text-xs text-on-surface-variant italic">No file</span>
                         )}
