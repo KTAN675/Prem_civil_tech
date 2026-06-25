@@ -8,6 +8,7 @@ import Gallery from './features/gallery/Gallery';
 import Contact from './features/contact/Contact';
 import GetQuote from './features/quote/GetQuote';
 import Blog from './features/blog/Blog';
+import Careers from './features/careers/Careers';
 import BottomNav from './components/layout/BottomNav';
 
 function App() {
@@ -22,6 +23,7 @@ function App() {
         <Route path="/contact" element={<Contact />} />
         <Route path="/get-quote" element={<GetQuote />} />
         <Route path="/blog" element={<Blog />} />
+        <Route path="/careers" element={<Careers />} />
       </Routes>
       <BottomNav />
     </Router>

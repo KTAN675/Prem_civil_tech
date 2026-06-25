@@ -78,6 +78,7 @@ export default function Header({ activePage }) {
           <Link className={getLinkClass('projects')} to="/projects">Projects</Link>
           <Link className={getLinkClass('gallery')} to="/gallery">Gallery</Link>
           <Link className={getLinkClass('blog')} to="/blog">Blog</Link>
+          <Link className={getLinkClass('careers')} to="/careers">Careers</Link>
           <Link className={getLinkClass('contact')} to="/contact">Contact</Link>
         </nav>
 
@@ -131,6 +132,10 @@ export default function Header({ activePage }) {
               <Link className={getMobileLinkClass('blog')} to="/blog" onClick={() => setMobileMenuOpen(false)}>
                 <span className="material-symbols-outlined text-lg">article</span>
                 Blog
+              </Link>
+              <Link className={getMobileLinkClass('careers')} to="/careers" onClick={() => setMobileMenuOpen(false)}>
+                <span className="material-symbols-outlined text-lg">work</span>
+                Careers
               </Link>
               <Link className={getMobileLinkClass('contact')} to="/contact" onClick={() => setMobileMenuOpen(false)}>
                 <span className="material-symbols-outlined text-lg">mail</span>

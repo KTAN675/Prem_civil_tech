@@ -64,6 +64,7 @@ export default function Footer() {
           <Link className="font-body-md text-body-md text-on-surface-variant hover:text-primary dark:hover:text-primary-container transition-all duration-300 ease-in-out" to="/services">Services</Link>
           <Link className="font-body-md text-body-md text-on-surface-variant hover:text-primary dark:hover:text-primary-container transition-all duration-300 ease-in-out" to="/projects">Projects</Link>
           <Link className="font-body-md text-body-md text-on-surface-variant hover:text-primary dark:hover:text-primary-container transition-all duration-300 ease-in-out" to="/gallery">Gallery</Link>
+          <Link className="font-body-md text-body-md text-on-surface-variant hover:text-primary dark:hover:text-primary-container transition-all duration-300 ease-in-out" to="/careers">Careers</Link>
         </div>
         <div className="col-span-1 flex flex-col gap-3">
           <h4 className="font-title-md text-title-md text-on-surface uppercase tracking-wide border-b border-outline-variant pb-2 mb-2">Contact</h4>
